@@ -2,8 +2,9 @@
 package com.mergemesh.backend.auth;
 
 import java.time.Instant;
-import java.util.stream.Collectors;
 
+import java.util.stream.Collectors;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,12 @@ public class AuthExceptionHandler {
                 HttpStatus.CONFLICT,
                 "The request conflicts with an existing database record"
         );
+    }
+    
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidCredentials(
+            InvalidCredentialsException exception) {
+        return error(HttpStatus.UNAUTHORIZED, exception.getMessage());
     }
 
     private ResponseEntity<ApiErrorResponse> error(
