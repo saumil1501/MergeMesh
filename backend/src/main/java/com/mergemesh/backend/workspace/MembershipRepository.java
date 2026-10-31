@@ -19,4 +19,6 @@ public interface MembershipRepository
     Optional<Membership> findByWorkspaceIdAndUserId(
             UUID workspaceId,
             UUID userId);
+    
+    List<Membership> findAllByWorkspaceId(UUID workspaceId);
 }
